@@ -3,21 +3,34 @@ import React from "react";
 function UsageProgress({ usedPercent }) {
   const percent = Math.min(Math.max(usedPercent, 0), 100);
 
+  const barColor =
+    percent > 85
+      ? "bg-red-500"
+      : percent > 70
+      ? "bg-amber-400"
+      : "bg-green-500";
+
   return (
-    <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-      <div style={{ width: "100px", height: "6px", background: "#e5e7eb" }}>
+    <div className="w-48">
+      <div className="relative h-4 bg-slate-700 rounded-full overflow-hidden">
         <div
-          style={{
-            width: `${percent}%`,
-            height: "100%",
-            background:
-              percent > 85 ? "#dc2626" : percent > 70 ? "#f59e0b" : "#16a34a",
-          }}
+          className={`h-full ${barColor} transition-all duration-300`}
+          style={{ width: `${percent}%` }}
         />
+
+        {/* Percentage label inside bar */}
+        <span
+          className="
+            absolute inset-0 flex items-center justify-center
+            text-[10px] font-medium text-white tabular-nums
+          "
+        >
+          {percent.toFixed(1)}%
+        </span>
       </div>
-      <span>{percent.toFixed(1)}%</span>
     </div>
   );
 }
+
 
 export default UsageProgress;
