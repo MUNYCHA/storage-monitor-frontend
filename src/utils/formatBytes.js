@@ -1,4 +1,4 @@
- function formatBytes(bytes, decimals = 2) {
+ export function formatBytes(bytes, decimals = 2) {
   const n = Number(bytes);
 
   if (!Number.isFinite(n) || n <= 0) return "0 B";
@@ -12,5 +12,3 @@
 
   return `${value.toFixed(fixed)} ${units[i]}`;
 }
-
-export default formatBytes;

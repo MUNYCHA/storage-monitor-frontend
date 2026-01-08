@@ -1,67 +1,60 @@
 import { useEffect, useState } from "react";
-import SystemGroupCard from "../components/SystemStorageUsageCard";  
+import { fetchLatestSystemStorageUsages } from "../services/api";
+import { normalizeToArray } from "../utils/normalizeToArray";
+import StorageTable from "../components/StorageTable";
 
-function SystemStorageMonitoringPage() {
+
+
+export default function SystemStorageMonitoringPage() {
   const [systemStorageUsages, setSystemStorageUsages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  function normalizeToArray(data) {
-  if (!data) return [];
-  return Array.isArray(data) ? data : [data];
-}
-
-
   useEffect(() => {
-    async function fetchSystemStorageUsages() {
+    const loadLatestSystemStorageUsages = async () => {
       try {
-        const res = await fetch("http://192.168.60.137:4141/api/system-storage-snapshot/latest");
-        if (!res.ok) throw new Error("Failed to fetch snapshot");
-        const data = await res.json();
-        setSystemStorageUsages(normalizeToArray(data));
-      } catch (e) {
-        setError(e.message);
+        const latestSystemStorageUsages = await fetchLatestSystemStorageUsages();
+        setSystemStorageUsages(normalizeToArray(latestSystemStorageUsages));
+      } catch (err) {
+        setError(err.message || "Failed to load data");
       } finally {
         setLoading(false);
       }
-    }
-
-    fetchSystemStorageUsages();
+    };
+    loadLatestSystemStorageUsages();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="p-6">Loading...</div>;
+  if (error) return <div className="p-6 text-red-600">Error: {error}</div>;
 
-const groupedBySystemId = systemStorageUsages.reduce((acc, systemStorageUsage) => {
-  if (!acc[systemStorageUsage.systemId]) {
-    acc[systemStorageUsage.systemId] = {
-      systemName: systemStorageUsage.systemName,
-      systemStorageUsages: [],
-    };
-  }
 
-  acc[systemStorageUsage.systemId].systemStorageUsages.push(systemStorageUsage);
-  return acc;
-}, {});
+  const groupedSystem = systemStorageUsages.reduce((acc, item) => {
+    if (!acc[item.systemId]) {
+      acc[item.systemId] = {
+        systemName: item.systemName,
+        servers: {},
+      };
+    }
 
+    if (!acc[item.systemId].servers[item.serverIp]) {
+      acc[item.systemId].servers[item.serverIp] = {
+        serverName: item.serverName,
+        paths: [],
+      };
+    }
+
+    acc[item.systemId].servers[item.serverIp].paths.push(
+      ...item.serverPathStorageUsages
+    );
+
+    return acc;
+  }, {});
 
 
   return (
-<div className="min-h-screen bg-slate-">
-  <div className="space-y-6 px-6 py-8">
-      {Object.values(groupedBySystemId).map((system) => (
-    <SystemGroupCard
-      key={system.systemId}
-      systemName={system.systemName}
-      systemStorageUsages={system.systemStorageUsages}
-    />
-  ))}
-  </div>
-</div>
-
-
-
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="mb-6 text-xl font-khmer">ស្ថានភាពទំហំ​ storage ប្រចាំថ្ងៃ</h1>
+      <StorageTable groupedSystem={groupedSystem} />
+    </div>
   );
 }
-
-export default SystemStorageMonitoringPage;
