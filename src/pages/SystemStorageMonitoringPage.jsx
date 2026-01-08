@@ -3,8 +3,6 @@ import { fetchLatestSystemStorageUsages } from "../services/api";
 import { normalizeToArray } from "../utils/normalizeToArray";
 import StorageTable from "../components/StorageTable";
 
-
-
 export default function SystemStorageMonitoringPage() {
   const [systemStorageUsages, setSystemStorageUsages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +11,8 @@ export default function SystemStorageMonitoringPage() {
   useEffect(() => {
     const loadLatestSystemStorageUsages = async () => {
       try {
-        const latestSystemStorageUsages = await fetchLatestSystemStorageUsages();
+        const latestSystemStorageUsages =
+          await fetchLatestSystemStorageUsages();
         setSystemStorageUsages(normalizeToArray(latestSystemStorageUsages));
       } catch (err) {
         setError(err.message || "Failed to load data");
@@ -26,7 +25,6 @@ export default function SystemStorageMonitoringPage() {
 
   if (loading) return <div className="p-6">Loading...</div>;
   if (error) return <div className="p-6 text-red-600">Error: {error}</div>;
-
 
   const groupedSystem = systemStorageUsages.reduce((acc, item) => {
     if (!acc[item.systemId]) {
@@ -50,10 +48,12 @@ export default function SystemStorageMonitoringPage() {
     return acc;
   }, {});
 
-
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="mb-6 text-xl font-khmer">ស្ថានភាពទំហំ​ storage ប្រចាំថ្ងៃ</h1>
+      <h1 className="mb-6 font-khmer text-2xl font-semibold text-slate-800">
+        ស្ថានភាពទំហំ storage ប្រចាំថ្ងៃ
+      </h1>
+
       <StorageTable groupedSystem={groupedSystem} />
     </div>
   );
