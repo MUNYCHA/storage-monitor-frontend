@@ -5,6 +5,14 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+    server: {
+    proxy: {
+      "/api": {
+        target: "http://192.168.60.137:4141", // Spring Boot
+        changeOrigin: true,
+      },
+    },
+  },
 })
 
 
