@@ -1,5 +1,6 @@
-export default function UsageBar({ usedPercent }) {
+export default function StorageUsageBar({ usedPercent }) {
   const percent = Math.min(Math.max(usedPercent ?? 0, 0), 100);
+  const displayPercent = Math.ceil(percent);
 
   const color =
     percent >= 85
@@ -12,10 +13,10 @@ export default function UsageBar({ usedPercent }) {
     <div className="relative h-5 w-full bg-slate-400 rounded-full">
       <div
         className={`h-full rounded-full ${color}`}
-        style={{ width: `${percent}%` }}
+        style={{ width: `${displayPercent}%` }}
       />
       <span className="absolute inset-0 flex items-center justify-center text-[18px] text-white">
-        {percent.toFixed(1)}%
+        {displayPercent}%
       </span>
     </div>
   );

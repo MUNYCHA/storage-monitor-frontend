@@ -1,8 +1,8 @@
-const BASE_URL = "http://192.168.60.137:4141";
+const BASE_URL = "http://localhost:8080";
 
-export const fetchLatestSystemStorageUsages = async () => {
+export const fetchLatestServerStorageUsages = async () => {
   const response = await fetch(
-    `${BASE_URL}/api/system-storage-snapshot/latest`
+    `${BASE_URL}/api/server-storage-usage/latest`
   );
   if (!response.ok) {
     throw new Error("Network response was not ok");

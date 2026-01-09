@@ -1,4 +1,4 @@
-const systemStorageSnapshot = {
+const testData = {
   serverName: "Linux mint VM",
   serverIp: "192.168.60.135",
   snapshotTime: "2025-12-26T15:26:19",
@@ -30,4 +30,4 @@ const systemStorageSnapshot = {
   ],
 };
 
-export default systemStorageSnapshot;
+export default testData;

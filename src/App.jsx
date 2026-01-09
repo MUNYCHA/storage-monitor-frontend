@@ -1,10 +1,10 @@
 import { useState } from "react";
-import SystemStorageMonitoringPage from "./pages/SystemStorageMonitoringPage";
+import SystemStorageMonitorPage from "./pages/SystemStorageMonitorPage";
 
 function App() {
   return (
     <div>
-      <SystemStorageMonitoringPage></SystemStorageMonitoringPage>
+      <SystemStorageMonitorPage></SystemStorageMonitorPage>
     </div>
   );
 }
