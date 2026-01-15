@@ -53,13 +53,15 @@ export default function SystemStorageMonitorPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="mb-6 font-khmer text-2xl font-semibold text-slate-800">
-        ស្ថានភាពទំហំ storage ប្រចាំថ្ងៃ
-      </h1>
+      <div className="mx-auto max-w-6xl">
+        <h1 className="mb-6 font-khmer text-2xl font-semibold text-slate-800">
+          ស្ថានភាពទំហំ storage ប្រចាំថ្ងៃ
+        </h1>
 
-      <SystemStorageUsageTable
-        serverStorageUsageGroupedBySystem={serverStorageUsageGroupedBySystem}
-      />
+        <SystemStorageUsageTable
+          serverStorageUsageGroupedBySystem={serverStorageUsageGroupedBySystem}
+        />
+      </div>
     </div>
   );
 }

@@ -10,12 +10,12 @@ export default function StorageUsageBar({ usedPercent }) {
       : "bg-green-500";
 
   return (
-    <div className="relative h-3 w-full bg-slate-500 rounded-full">
+    <div className="relative h-2 w-full bg-slate-500 rounded-full">
       <div
         className={`h-full rounded-full ${color}`}
         style={{ width: `${displayPercent}%` }}
       />
-      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
+      <span className="absolute inset-0 flex items-center justify-center text-[7px] text-white">
         {displayPercent}%
       </span>
     </div>

@@ -10,7 +10,7 @@ export default function SystemStorageUsageTable({
   return (
     <div className="overflow-x-auto bg-white shadow rounded">
       <table className="w-full table-auto border-collapse text-sm border border-gray-300">
-        <thead className="bg-blue-500 text-white text-[15px] font-normal">
+        <thead className="bg-blue-500 text-white text-[10px] font-normal">
           <tr>
             <th className="border border-gray-300 px-3 py-2 text-left">
               Server-IP
@@ -30,7 +30,7 @@ export default function SystemStorageUsageTable({
           </tr>
         </thead>
 
-        <tbody className="text-[10px]">
+        <tbody className="text-[7px]">
           {Object.entries(serverStorageUsageGroupedBySystem).map(
             ([systemId, system]) => {
               return (
@@ -38,7 +38,7 @@ export default function SystemStorageUsageTable({
                   <tr className="bg-blue-500 font-khmer text-white">
                     <td
                       colSpan={5}
-                      className="border border-gray-300 px-3 py-2 font-medium text-left"
+                      className="border border-gray-300 px-3 py-2 text-[10px] font-medium text-left"
                     >
                       ​​ {system.systemName}
                     </td>
